@@ -1,6 +1,6 @@
 # Week 6 Library Catalog Service
 
-Borrow tracking, shared-space booking, and librarian administration for the library catalog. The repository includes an Express/Mongoose API and a React/Vite frontend so the complete assignment can be run and demonstrated from this project.
+Borrow tracking, shared-space booking, and librarian administration for the library catalog. This repository contains the Express/Mongoose API; the separate React/Vite application lives in [library-catalog-frontend](https://github.com/sakatstacy-ops/WEEK-5-ASSIGNMENT-library-catalog-frontend).
 
 ## Features
 
@@ -11,7 +11,6 @@ Borrow tracking, shared-space booking, and librarian administration for the libr
 - Librarians alone can update request status. The server sets the return timestamp and computes any fine.
 - Patrons can reserve an active library space. The server rejects time overlaps for the same space and date.
 - Librarians can view all borrow requests, current server-calculated fines, and all space bookings.
-- Admin pages show loading, error, and empty states and use live API data.
 
 ## Project layout
 
@@ -34,17 +33,17 @@ middleware/auth.js
 utils/
   http.js
   libraryRules.js
-src/
-  pages/admin/AdminBooksPage.jsx
-  pages/admin/AdminBorrowRequestsPage.jsx
-  pages/admin/AdminBookingsPage.jsx
 server.js
 seed.js
+__tests__/
+  auth.test.js
+  bookings.test.js
+  fine.test.js
 ```
 
 ## Setup and run
 
-Requirements: Node.js 18 or newer, npm, and a MongoDB Atlas URI configured as a replica set (Atlas clusters support the transactions used for inventory consistency).
+Requirements: Node.js 20 or newer, npm, and a MongoDB Atlas URI configured as a replica set (Atlas clusters support the transactions used for inventory consistency).
 
 1. Clone the repository and install dependencies:
 
@@ -64,15 +63,15 @@ Requirements: Node.js 18 or newer, npm, and a MongoDB Atlas URI configured as a 
 
    **Warning:** seeding deletes and recreates the `books` and `genres` collections in the configured database. Use a development database, not a database containing data you need to keep. The sample space `Reading Room A` is inserted if it does not already exist.
 
-4. Start the API and frontend:
+4. Start the API:
 
    ```powershell
    npm run dev
    ```
 
-   Visit <http://localhost:5173>. The API runs on <http://localhost:4000>. The Vite development server proxies `/api` requests to the API.
+   The API runs on <http://localhost:4000>. Start the frontend separately by following its README.
 
-5. Create a patron account from the sign-in page. Public registration always creates a patron; it never accepts a role from the request. To make a demo librarian, use a trusted MongoDB admin shell:
+5. Create a patron account using the frontend or `POST /api/auth/register`. Public registration always creates a patron; it never accepts a role from the request. To make a demo librarian, use a trusted MongoDB admin shell:
 
    ```javascript
    db.users.updateOne(
@@ -139,11 +138,10 @@ The patron can use `/reading-list` to save a catalog title and submit a borrow r
 ## Test and build
 
 ```powershell
-npm run test:catalog
-npm run build
+npm test
 ```
 
-The focused tests check due-date fine boundaries, date/time validation, and the strict booking overlap filter.
+The Jest suite covers authentication/RBAC responses, conflicting bookings, and calculated fine amounts. The Render blueprint is in `render.yaml`; configure `MONGODB_URI` and the exact deployed frontend origin before using the public service.
 
 ## Suggested submission recording
 
