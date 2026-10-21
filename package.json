@@ -1,0 +1,33 @@
+{
+  "name": "spendwise-book-catalog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SpendWise services and library catalog assignment",
+  "main": "seed.js",
+  "scripts": {
+    "seed": "node seed.js",
+    "start": "node server.js",
+    "dev:api": "nodemon server.js",
+    "dev:web": "vite --host 0.0.0.0",
+    "dev": "concurrently -k \"npm:dev:api\" \"npm:dev:web\"",
+    "build": "vite build",
+    "test:catalog": "node --test tests/libraryRules.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.2",
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.10",
+    "vite": "^6.3.5"
+  }
+}
