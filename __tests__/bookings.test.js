@@ -1,4 +1,5 @@
 process.env.JWT_SECRET = 'week-seven-test-secret-with-more-than-32-characters';
+process.env.MONGODB_URI = 'mongodb://127.0.0.1/library-catalog-test';
 
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
